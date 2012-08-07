@@ -1,0 +1,8 @@
+
+<script>
+    var BE_TOOLS = new M17BackendTools({
+        "lang": {
+            "Saving": "Data will be stored, please wait."
+        }
+    });
+</script>

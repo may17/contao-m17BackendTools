@@ -7,6 +7,9 @@ M17BackendTools = new Class({
     options:{
         'css':{
             'stickyClass':'stickySave'
+        },
+        'lang': {
+            'Saving': 'Daten werden gespeichert',
         }
     },
     initialize:function (options) {
@@ -65,6 +68,7 @@ M17BackendTools = new Class({
         });
     },
     colSave: function(elSet) {
+        var self = this;
         elSet.addEvent('click', function(e){
             e.preventDefault();
             var _href = this.get('href');
@@ -73,8 +77,8 @@ M17BackendTools = new Class({
             var _parent = this.getParent('ul');
             var xhr = new Request.HTML({
                 'url': _href,
-                onRequest: AjaxRequest.displayBox(CONTAO_SAVING + ' …'),
-                onFailure: AjaxRequest.displayBox(CONTAO_ERROR + '!'),
+                onRequest: AjaxRequest.displayBox(self.options.lang.Saving + ' …'),
+                onFailure: AjaxRequest.displayBox(self.options.lang.SavingError + '!'),
                 onSuccess: function(responseText, responseXML) {
                     AjaxRequest.hideBox();
                     _howdy.set('text', _hrefLabel);
@@ -183,8 +187,11 @@ M17BackendTools = new Class({
     }
 });
 //var BE_TOOLS;
+
+
+
 var BE_TOOLS = new M17BackendTools();
 
-
+Backend.addDragAndDrop();
 
 //console.log(BE_TOOLS);

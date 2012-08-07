@@ -4,35 +4,30 @@
 .onlyMain #saveNclose,
 .onlyMain #saveNcreate,
 .onlyMain .header_back,
-.onlyMain #saveNback{ display: none; }
+.onlyMain #saveNback                { display: none; }
 
-.onlyMain #container            { width: auto; }
-.onlyMain #footer               { width: 726px; }
+.onlyMain #container                { width: auto; }
+.onlyMain #footer                   { width: 726px; }
 
-.tl_formbody_submit             { width: 728px; border-left: 1px solid #BBB; border-right: 1px solid #BBB; margin-left: -2px; }
+.tl_formbody_submit                 { width: 728px; border-left: 1px solid #BBB; border-right: 1px solid #BBB; margin-left: -2px; }
 
-.stickySave .tl_formbody_submit                    { position: fixed; bottom: 0; }
-.stickySave #main                           { padding-bottom: 30px; margin-bottom: 30px; }
-.stickySave #tl_helpBox         { left: 0%; margin-left: 30px; }
-.dragAndDrop                    { cursor: move; }
+.dragAndDrop                        { cursor: move; }
 
-.m17editPage                    { margin-left: 10px; }
+.m17editPage                        { margin-left: 10px; }
 
-.tl_tree {  }
-
-.rtz                {  }
+.tl_tree                            {  }
 
 
-.tl_listing .rtz li      { padding: 0 0 0 20px; marigin: 0; background: none; text-indent: 0; }
+.tl_listing .rtz li                 { padding: 0 0 0 20px; marigin: 0; background: none; text-indent: 0; }
 .tl_listing .rtz,
-.tl_listing .rtz li     { display: inline-block; }
+.tl_listing .rtz li                 { display: inline-block; }
 
-.tl_listing .rtz ul             { display: block; position: absolute; top: 5px; left: -999%; background-color: #fff; margin: 0 0 0 10px; padding: 10px; z-index: 888; width: 100px; border: 1px solid #8AB858; }
-.tl_listing .rtz ul li          { display: block; padding: 0 0 5px 0; }
-.rtz li:hover ul    { left: auto; }
-.tl_file .tl_left           { position: relative; }
+.tl_listing .rtz ul                 { display: block; position: absolute; top: 1px; left: -999em; background-color: #fff; margin: 0 0 0 10px; padding: 10px; z-index: 888; width: 100px; border: 1px solid #8AB858; }
+.tl_listing .rtz ul li              { display: block; padding: 0 0 5px 0; }
+.rtz li:hover ul                    { left: auto; margin-left: 15px; }
+.tl_file .tl_left                   { position: relative; }
 
-.movethis { cursor: move; }
+.movethis                           { cursor: move; }
 
 
 .bet-crudwarap {
@@ -58,4 +53,19 @@
 
 .tl_right {
     position: relative;
+}
+
+.saving-hint {
+    background-color: #fff;
+    z-index: 122;
+}
+
+.saving-hint .spinner-content {
+    border: 5px solid #8AB858;
+    width: 300px;
+    padding: 50px 10px 10px 10px;
+    border-radius: 10px;
+    background: url('/system/themes/default/images/loading.gif') no-repeat 55% 10px;
+    margin-top: -400px;
+    text-align: center;
 }

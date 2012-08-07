@@ -1,23 +1,23 @@
-var CONTAO_SAVING = 'Daten werden gespeichert';
-var CONTAO_ERROR = 'Tut uns Leid, leider ist ein ';
-
-var M17BackendTools;
-M17BackendTools = new Class({
+var M17BackendTools = new Class({
     Implements:[Options, Events],
     options:{
         'css':{
             'stickyClass':'stickySave'
+        },
+        'lang': {
+            'Saving': 'Daten werden gespeichert'
         }
     },
     initialize:function (options) {
         this.setOptions(options);
         this.url = new URI(location.href);
+        this.showInformations();
+        this.SaveAndCloseLightbox();
     },
     tlArticle: function() {
         var self = this;
         window.addEvent('domready', function(){
             self.removeArticleEditHide($$('#main')[0]);
-            self.showInformations();
             if($$(".m17BT-colList a").length > 0) {
                 self.colSave($$(".m17BT-colList a"));
             }
@@ -46,6 +46,16 @@ M17BackendTools = new Class({
             el.set('action', el.get('action')+'&reload=1');
             if(this.url.getData('reload') && $$('#main form .error').length < 1)
             {
+                document.id('main').setStyles({
+                    'height': '400px',
+                    'overflow': 'hidden'
+                });
+                var waitScreen = new Spinner(document.body, {
+                    'message': 'Please wait, Contao saves your changes',
+                    'class': 'saving-hint'
+                });
+
+                waitScreen.show();
                 parent.location.href = parent.location.href;
             }
         },this);
@@ -65,6 +75,7 @@ M17BackendTools = new Class({
         });
     },
     colSave: function(elSet) {
+        var self = this;
         elSet.addEvent('click', function(e){
             e.preventDefault();
             var _href = this.get('href');
@@ -73,8 +84,7 @@ M17BackendTools = new Class({
             var _parent = this.getParent('ul');
             var xhr = new Request.HTML({
                 'url': _href,
-                onRequest: AjaxRequest.displayBox(CONTAO_SAVING + ' …'),
-                onFailure: AjaxRequest.displayBox(CONTAO_ERROR + '!'),
+                onRequest: AjaxRequest.displayBox(self.options.lang.Saving + ' …'),
                 onSuccess: function(responseText, responseXML) {
                     AjaxRequest.hideBox();
                     _howdy.set('text', _hrefLabel);
@@ -82,109 +92,5 @@ M17BackendTools = new Class({
             });
             xhr.send();
         });
-    },
-    //TODO Exprimental STUFF
-    addDragADrop: function() {
-        $$('.tl_listing .tl_file').each(function(el) {
-            var moveItem = new Element('img', {'src': 'system/modules/m17BackendTools/html/img/icon/arrow-move.png','alt': 'move', 'class': 'movethis'});
-            moveItem.inject(el.getElement('.tl_left a') ,'before');
-        });
-
-
-        $$('.tl_listing .tl_file').addEvent('mousedown', function(event) {
-            event.stop();
-            $this = this;
-            if(event.target.hasClass('movethis')) {
-
-                var cloneer = $this.getElement('.tl_left').clone().setStyles(this.getCoordinates()).setStyles({
-                      opacity: 0.7,
-                      position: 'absolute'
-                    }).inject(document.body);
-                cloneer.getElement('.rtz').setStyle('display', 'none');
-                var drag = new Drag.Move(cloneer, {
-
-                                  droppables: $$('.tl_listing .tl_file', '.tl_listing .tl_folder'),
-
-                                  onDrop: function(dragging, goal){
-                                      dragging.destroy();
-                                      goal.setStyle('outline', 'none');
-                                      $this.inject(goal,'after');
-                                      var _padding;
-                                      var doRequest = function(mode,pid,id) {
-                                        var _xhr = new Request({
-                                          'url': 'http://cto2111.local/contao/main.php?do=article&act=cut&mode=1&pid=17&id=10'
-                                        });
-                                      };
-
-                                      if(goal.hasClass('tl_folder')) {
-                                          _padding = goal.getElement('.tl_left').getStyle('paddingLeft').toInt() + 40;
-                                      } else {
-                                          _padding = goal.getElement('.tl_left').getStyle('paddingLeft').toInt();
-                                      }
-
-                                      $this.getElement('.tl_left').setStyles({
-                                          'paddingLeft': _padding
-                                      });
-
-
-                                  },
-                                  onEnter: function(dragging, goal){
-                                        goal.setStyle('outline', '2px dotted #8AB858');
-                                  },
-                                  onLeave: function(dragging, goal){
-                                      goal.setStyle('outline', 'none');
-                                  },
-                                  onCancel: function(dragging){
-                                      dragging.destroy();
-                                  }
-                                });
-
-                                    drag.start(event);
-                            }
-
-        });
-    },
-    // TODO Icons zusammenfassen
-    stickCrudTogether: function() {
-        var getTlRight = $$('.tl_right');
-
-        getTlRight.each(function(el) {
-            var firstEl = el.getFirst() || false,
-                sibs = (firstEl) ? firstEl.getSiblings('a') : false,
-                imgs = el.getElements('img');
-
-            if(sibs) {
-                var wrapper = new Element('div.bet-crudwarap');
-                //sibs.setStyle('display', 'none');
-                sibs.inject(wrapper);
-                wrapper.inject(el);
-            }
-
-            imgs.each(function(img) {
-                var altAttr = img.get('alt'),
-                    info = new Element('span.bet-altlabel', {
-                        text: altAttr
-                    });
-                info.inject(img, 'after');
-            });
-
-            if(firstEl) {
-            el.addEvents({
-                'mouseenter': function(e) {
-                    this.addClass('hover');
-                },
-                'mouseleave': function(e) {
-                    this.removeClass('hover');
-                }
-            });
-            }
-        });
-
     }
 });
-//var BE_TOOLS;
-var BE_TOOLS = new M17BackendTools();
-
-
-
-//console.log(BE_TOOLS);

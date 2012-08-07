@@ -33,30 +33,15 @@ $GLOBALS['TL_DCA']['tl_article']['config']['onload_callback'][] = array('m17BETA
 $GLOBALS['TL_DCA']['tl_article']['list']['label']['format'] = '<span class="m17BT-lblName">%s</span> <span style="color:#b3b3b3;padding-left:3px">[<span class="currentCol">%s</span>]</span>';
 $GLOBALS['TL_DCA']['tl_article']['list']['label']['label_callback'] = array('m17BETArticle', 'rewriteLabel');
 
-/**
- * Exendts the tl_article dca backend class
- */
 class m17BETArticle extends tl_article
 {
-    /**
-     * Init javascript files
-     */
-    public function loadJs()
-    {
+    public function loadJs() {
         $GLOBALS['TL_MOOTOOLS'][] = '
         <script>
-            BE_TOOLS.tlArticle();
-            //BE_TOOLS.addDragADrop();
+        BE_TOOLS.colSave($$(".m17BT-colList a"));
+        BE_TOOLS.addDragADrop();
         </script>';
     }
-
-    /**
-     * rewrite the label and adding the column list
-     * @param $row
-     * @param $label
-     * @param DataContainer $dc
-     * @return string
-     */
     public function rewriteLabel($row, $label, DataContainer $dc)
     {
         if(strlen($this->Input->get('col')))
@@ -83,12 +68,6 @@ class m17BETArticle extends tl_article
         $_list .= '</ul></li></ul>';
         return $addIcon.$_list;
     }
-
-    /**
-     * Adding ajax support for the fast column switch
-     * @param $intId
-     * @param $col
-     */
     private function setCol($intId, $col)
    	{
    		// Check permissions to edit

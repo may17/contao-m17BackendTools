@@ -30,8 +30,15 @@
 
 class M17BackendTools extends Backend
 {
+    /**
+     * Set class only main to the body class
+     * @param $strContent
+     * @param $strTemplate
+     * @return mixed
+     */
     public function reparseBackendTemplate($strContent, $strTemplate)
     {
+
         if($this->Input->get('showOnlyMain'))
         {
             $strContent = str_replace('<body id="top" class="', '<body id="top" class="onlyMain ', $strContent);

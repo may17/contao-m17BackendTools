@@ -34,9 +34,23 @@ $GLOBALS['TL_DCA']['tl_content']['list']['global_operations']['editPage'] = arra
         'button_callback' => array('tl_m17BackendTools', 'editPage')
     );
 
+/**
+ * Extends the backend class
+ */
 class tl_m17BackendTools extends Backend
 {
-    /* Generate Edit Page Button */
+
+    /**
+     * Adding a new item to the operation list
+     * @param $href
+     * @param $label
+     * @param $title
+     * @param $className
+     * @param $attributes
+     * @param $strTable
+     * @param $root
+     * @return string
+     */
     public function editPage($href, $label, $title, $className, $attributes, $strTable, $root)
     {
         
