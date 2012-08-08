@@ -12,7 +12,7 @@ var M17BackendTools = new Class({
         this.setOptions(options);
         this.url = new URI(location.href);
         this.showInformations();
-        this.SaveAndCloseLightbox();
+        //this.SaveAndCloseLightbox();
     },
     tlArticle: function() {
         var self = this;
