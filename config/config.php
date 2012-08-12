@@ -34,6 +34,5 @@ if(TL_MODE == 'BE')
     $GLOBALS['TL_MOOTOOLS'][] = $beToolsMainInitTemplate->parse();
     $GLOBALS['TL_HOOKS']['parseBackendTemplate'][] = array('M17BackendTools', 'reparseBackendTemplate');
     $GLOBALS['TL_CSS'][] = 'system/modules/m17BackendTools/html/css/main.css';
-    $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/m17BackendTools/html/js/nested-1.3.js';
-    $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/m17BackendTools/html/js/m17BackendTools_future.js';
+    $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/m17BackendTools/html/js/M17BackendTools_future.js';
 }
