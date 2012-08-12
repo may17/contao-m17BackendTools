@@ -12,14 +12,15 @@ var M17BackendTools = new Class({
         this.setOptions(options);
         this.url = new URI(location.href);
         this.showInformations();
-        //this.SaveAndCloseLightbox();
     },
     tlArticle: function() {
         var self = this;
         window.addEvent('domready', function(){
+
             self.removeArticleEditHide($$('#main')[0]);
             if($$(".m17BT-colList a").length > 0) {
                 self.colSave($$(".m17BT-colList a"));
+                self.fastPageEdit();
             }
 
             if(self.url.getData('showOnlyMain') && parent.document){
@@ -34,6 +35,26 @@ var M17BackendTools = new Class({
         var $this = this;
         window.addEvent('ajax_change', function() {
             $this.tlArticle();
+        });
+    },
+    fastPageEdit: function() {
+        var pagesFolderRight = $$('.tl_folder .tl_right'),
+            editShadow = document.getElement('.tl_file img[src$=edit.gif]').getParent('a').addClass('editPage'),
+            self = this;
+
+        pagesFolderRight.each(function(el) {
+            if(!el.getElement('.editPage')) {
+                var url = new URI(el.getParent().getElement('a.tl_gray').get('href'));
+                var pageId = url.getData('page');
+                var button = editShadow.clone().set({
+                    'href': 'contao/main.php?do=page&act=edit&id='+pageId,
+                    'title': ''
+                });
+
+                self.addLightboxToElement(button, 'fastEditPage');
+
+                button.inject(el, 'inside');
+            }
         });
     },
     showInformations: function() {
