@@ -45,7 +45,7 @@ class m17BETArticle extends tl_article
     {
         $GLOBALS['TL_MOOTOOLS'][] = '
         <script>
-            BE_TOOLS.tlArticle();
+            //BE_TOOLS.tlArticle();
             //BE_TOOLS.addDragADrop();
         </script>';
     }

@@ -38,11 +38,29 @@ class M17BackendTools extends Backend
      */
     public function reparseBackendTemplate($strContent, $strTemplate)
     {
+        /* Load */
+        $this->loadDcaBeToolsJsFiles();
+
+        $GLOBALS['TL_MOOTOOLS'][] = '<script>
+            window.addEvent("domready", function() {
+                new M17BackendTools();
+            });
+        </script>';
 
         if($this->Input->get('showOnlyMain'))
         {
             $strContent = str_replace('<body id="top" class="', '<body id="top" class="onlyMain ', $strContent);
         }
         return $strContent;
+    }
+
+    private function loadDcaBeToolsJsFiles()
+    {
+        if($this->Input->get('do')) {
+            $path = 'system/modules/m17BackendTools/html/js/betools.tl_'.$this->Input->get('do').'.js';
+            if(file_exists(TL_ROOT.'/'.$path)) {
+                $GLOBALS['TL_MOOTOOLS'][] = '<script src="'.$path.'"></script>';
+            }
+        }
     }
 }

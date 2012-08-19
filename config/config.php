@@ -30,9 +30,9 @@
 
 if(TL_MODE == 'BE')
 {
-    $beToolsMainInitTemplate = new BackendTemplate('moo_beTools');
-    $GLOBALS['TL_MOOTOOLS'][] = $beToolsMainInitTemplate->parse();
+    //$GLOBALS['TL_HOOKS']['loadDataContainer'][] = array('M17BackendTools', 'addMooTemplates');
+
     $GLOBALS['TL_HOOKS']['parseBackendTemplate'][] = array('M17BackendTools', 'reparseBackendTemplate');
     $GLOBALS['TL_CSS'][] = 'system/modules/m17BackendTools/html/css/main.css';
-    $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/m17BackendTools/html/js/M17BackendTools_future.js';
+    $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/m17BackendTools/html/js/betools.base.js';
 }
