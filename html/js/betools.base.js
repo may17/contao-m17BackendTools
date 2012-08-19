@@ -44,7 +44,12 @@ var M17BackendTools = new Class({
     },
     SaveAndCloseLightbox: function() {
         if(this.url.getData('showOnlyMain')) {
-            $$('.tl_form').each(function(el){
+            $$('.tl_form').each(function(el) {
+                el.set('action', el.get('action')+'&reload=1');
+                if(this.url.getData('reload') && $$('#main form .error').length < 1)
+                {
+                    parent.location.href = parent.location.href;
+                }
                 /* The hidebox should be include outside as global method
 
 
